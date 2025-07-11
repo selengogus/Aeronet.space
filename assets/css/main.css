@@ -11,10 +11,18 @@
 # Help: https://bootstrapmade.com/color-system/
 --------------------------------------------------------------*/
 /* Fonts */
+
+@font-face {
+  font-family: "Aptos";
+  src: url("../assets/fonts/aptos.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Inter",  sans-serif;
+  --default-font: "Aptos", sans-serif;
+  --heading-font: "Aptos", sans-serif;
+  --nav-font: "Aptos", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -154,7 +162,33 @@ h6 {
 }
 
 .header .logo {
-  line-height: 1;
+  position: relative;
+  display: block;
+  width: 40vw;
+  max-width: 400px;
+  aspect-ratio: 5 / 1.5;
+}
+
+.header .logo::before,
+.header .logo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.header .logo::before {
+  background-image: url("/assets/img/image-white.png");
+  opacity: 1;
+}
+
+.header .logo::after {
+  background-image: url("/assets/img/image-blue.png");
+  opacity: 0;
 }
 
 .header .logo h1 {
@@ -165,6 +199,8 @@ h6 {
   transition: all 0.5s;
    text-shadow: 0px 0px 2px var(--default-color);
 }
+
+
 
 @media (max-width: 1200px) {
 
@@ -185,6 +221,14 @@ h6 {
 
 .scrolled .header .logo h1 {
   color: var(--heading-color);
+}
+
+.scrolled .header .logo::before {
+  opacity: 0;
+}
+
+.scrolled .header .logo::after {
+  opacity: 1;
 }
 
 /*--------------------------------------------------------------
@@ -266,61 +310,22 @@ h6 {
     color: color-mix(in srgb, var(--nav-color) 90%, white 15%);
   }
 
-  .navmenu .dropdown ul {
-    margin: 0;
-    padding: 10px 0;
-    background: var(--nav-dropdown-background-color);
-    display: block;
-    position: absolute;
-    visibility: hidden;
-    left: 14px;
-    top: 130%;
-    opacity: 0;
-    transition: 0.3s;
-    border-radius: 4px;
-    z-index: 99;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-  }
+  .navmenu .lang-inner {
+  display: flex;
+  padding: 10px;
+  gap: 15px;
+  align-items: center;
+}
 
-  .navmenu .dropdown ul li {
-    min-width: 200px;
-  }
-
-  .navmenu .dropdown ul a {
-    padding: 10px 20px;
-    font-size: 15px;
-    text-transform: none;
-    color: var(--nav-dropdown-color);
-  }
-
-  .navmenu .dropdown ul a i {
-    font-size: 12px;
-  }
-
-  .navmenu .dropdown ul a:hover,
-  .navmenu .dropdown ul .active:hover,
-  .navmenu .dropdown ul li:hover>a {
-    color: var(--nav-dropdown-hover-color);
-  }
-
-  .navmenu .dropdown:hover>ul {
-    opacity: 1;
-    top: 100%;
-    visibility: visible;
-  }
-
-  .navmenu .dropdown .dropdown ul {
-    top: 0;
-    left: -90%;
-    visibility: hidden;
-  }
-
-  .navmenu .dropdown .dropdown:hover>ul {
-    opacity: 1;
-    top: 0;
-    left: -100%;
-    visibility: visible;
-  }
+.navmenu .lang-inner a,
+.navmenu .lang-inner span {
+  color: var(--nav-color); /* genel menü rengi */
+  font-size: 13px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: var(--nav-font);
+}
 }
 
 /* Mobile Navigation */
@@ -335,33 +340,79 @@ h6 {
   }
 
   .navmenu {
+    
     padding: 0;
     z-index: 9997;
+
   }
 
   .navmenu ul {
-    display: none;
-    list-style: none;
-    position: absolute;
-    inset: 60px 20px 20px 20px;
-    padding: 10px 0;
-    margin: 0;
-    border-radius: 6px;
-    background-color: var(--nav-mobile-background-color);
-    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-    box-shadow: none;
-    overflow-y: auto;
-    transition: 0.3s;
-    z-index: 9998;
-  }
+  visibility: hidden;           
+  opacity: 0;                   
+  position: fixed;              
+  inset: 0 0 0 auto;          
+  padding: 20px 0;
+  padding-top: 10vh;
+  gap: 15px;
+  margin: 0;
+  border-radius: 6px 0 0 6px;
+  background-color: rgba(33, 37, 41, 0.8);
+  border: none;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; 
+  transform: translateX(100%);
+  z-index: 9998;
+}
+
+ .lang-mobile {
+   position: absolute;             
+  bottom: 0;                     
+  left: 0;
+  width: 100%;                    
+  display: flex;
+  justify-content: left;
+  gap: 15px;
+  padding: 20px 0;
+  padding-bottom: 10vh;
+  font-size: 16px;
+  color: white;
+  visibility: hidden;           
+  opacity: 0;
+}
+.mobile-nav-active .lang-mobile {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+  .mobile-nav-active .navmenu > ul {
+  visibility: visible;         
+  opacity: 1;                  
+  transform: translateX(0);     
+  
+    width: 30vw;
+}
+
+.lang-mobile a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.lang-mobile a:hover {
+  color: #6c9dd4;
+}
+
 
   .navmenu a,
   .navmenu a:focus {
-    color: var(--nav-dropdown-color);
+    color: #fff; 
     padding: 10px 20px;
     font-family: var(--nav-font);
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 550;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -403,25 +454,6 @@ h6 {
     transform: rotate(180deg);
   }
 
-  .navmenu .dropdown ul {
-    position: static;
-    display: none;
-    z-index: 99;
-    padding: 10px 0;
-    margin: 10px 20px;
-    background-color: var(--nav-dropdown-background-color);
-    transition: all 0.5s ease-in-out;
-  }
-
-  .navmenu .dropdown ul ul {
-    background-color: rgba(33, 37, 41, 0.1);
-  }
-
-  .navmenu .dropdown>.dropdown-active {
-    display: block;
-    background-color: rgba(33, 37, 41, 0.03);
-  }
-
   .mobile-nav-active {
     overflow: hidden;
   }
@@ -440,15 +472,11 @@ h6 {
     position: fixed;
     overflow: hidden;
     inset: 0;
-    background: rgba(33, 37, 41, 0.8);
-    transition: 0.3s;
+    background: transparent; /* MODIFIED: arkaplan kaldırıldı çünkü ul zaten siyah */
+    transition: none;
   }
 
-  .mobile-nav-active .navmenu>ul {
-    display: block;
-  }
 }
-
 /*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
@@ -466,7 +494,7 @@ h6 {
 
 .footer .footer-top .row {
   display: flex;
-  justify-content: space-between; /* İki alt div'i zıt köşelere iter */
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -1054,6 +1082,10 @@ section,
 .features .tab-content {
   margin-top: 30px;
 }
+.features .tab-pane {
+  align-items: center;
+  justify-content: center;
+}
 
 .features .tab-pane h3 {
   color: var(--heading-color);
@@ -1077,7 +1109,7 @@ section,
 }
 
 .features .tab-pane img {
-  max-height: 50%;
+  max-height: 100%;
   object-fit: cover;
 }
 
