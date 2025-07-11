@@ -391,7 +391,7 @@ h6 {
   opacity: 1;                  
   transform: translateX(0);     
   
-    width: 30vw;
+    width: 45vw;
 }
 
 .lang-mobile a {
@@ -1071,11 +1071,23 @@ section,
     line-height: 1;
     font-size: 36px;
   }
+
+  .features .nav-item svg {
+    width: 60%;
+    height: auto;
+    padding: 0;
+  }
 }
 
 @media (max-width: 575px) {
   .features .nav-link {
     padding: 15px;
+  }
+
+  .features .nav-item svg {
+    width: 60%;
+    height: auto;
+    padding: 0;
   }
 }
 
